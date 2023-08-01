@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Bitcoin",
+    "asset_id": "BTC"
+  },
+  {
+    "name": "Ethereum",
+    "asset_id": "ETH"
+  },
+  {
+    "name": "Tether",
+    "asset_id": "USDT"
+  },
+  {
+    "name": "Binance Coin",
+    "asset_id": "BNB"
+  },
+  {
+    "name": "Ripple",
+    "asset_id": "XRP"
+  },
+  {
+    "name": "USDC",
+    "asset_id": "USDC"
+  },
+  {
+    "name": "STETH",
+    "asset_id": "STETH"
+  },
+  {
+    "name": "DogeCoin",
+    "asset_id": "DOGE"
+  },
+  {
+    "name": "Cardano",
+    "asset_id": "ADA"
+  },
+  {
+    "name": "Solana",
+    "asset_id": "SOL"
+  }
+]
