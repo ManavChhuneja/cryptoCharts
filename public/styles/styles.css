@@ -124,6 +124,8 @@ table {
 }
 
 body {
+  height: 100%;
+  width: 100%;
   padding: 0 20%;
   margin-bottom: 0;
   font-family: "Kanit", sans-serif;
@@ -145,4 +147,56 @@ ul {
 h1 {
   font-weight: 900;
   font-size: 2rem;
+}
+
+.radio-group label {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.radio-group input[type="radio"] {
+  display: none; /* Hide the circular radio buttons */
+}
+
+/* Style for when the radio button is selected */
+.radio-group input[type="radio"]:checked + span {
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* Apply a shadow to the selected option */
+}
+
+section#charts {
+  margin-top: 5%;
+}
+
+section#charts .title-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+section#charts h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.radio-group {
+  display: flex;
+  justify-content: right;
+}
+
+.suggestions-dropdown {
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow: auto;
+  display: none;
+  position: absolute;
+  width: 200px; /* Adjust as needed */
+  background-color: white;
+}
+
+.suggestion-hover:hover {
+  background-color: bisque;
 }

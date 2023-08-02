@@ -14,8 +14,15 @@
       href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,300;1,900&family=Roboto+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+      integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
 
     <link rel="stylesheet" href="/styles/styles.css" />
+    <script src="/logic/index.js" defer></script>
     <title>Crypto Charts</title>
   </head>
   <body>
@@ -23,12 +30,49 @@
       <ul>
         <li><h1>Crypto Charts</h1></li>
         <li>
-          <form action="/" method="post">
-            <input type="text" placeholder="Search" />
+          <form action="/coin" method="post">
+            <input type="text" placeholder="Search" name="coin" id="search" />
+            <div id="suggestions" class="suggestions-dropdown"></div>
           </form>
         </li>
       </ul>
     </nav>
     <hr />
+    <section id="charts">
+      <div class="title-container">
+        <h2>BTC</h2>
+        <form method="post" action="/date" id="radioForm">
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="option" value="1" />
+              <span>1 Day</span>
+            </label>
+            <label>
+              <input type="radio" name="option" value="7" />
+              <span>7 Days</span>
+            </label>
+            <label>
+              <input type="radio" name="option" value="30" />
+              <span>30 Days</span>
+            </label>
+            <label>
+              <input type="radio" name="option" value="90" />
+              <span>90 Day</span>
+            </label>
+            <label>
+              <input type="radio" name="option" value="10" />
+              <span>180 Days</span>
+            </label>
+            <label>
+              <input type="radio" name="option" value="360" />
+              <span>360 Days</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <canvas id="myChart"></canvas>
+
+      <script src="/logic/coinCharts.js"></script>
+    </section>
   </body>
 </html>
