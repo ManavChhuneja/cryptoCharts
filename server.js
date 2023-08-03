@@ -17,17 +17,14 @@ app.get("/", (req, res) => {
   res.render("index.ejs");
 });
 
+app.get("/coin-chart", (req, res) => {
+  const { coin, lookback } = req.query;
+  console.log(coin, lookback);
+  res.sendStatus(200);
+});
+
 app.get("/coinsData", (req, res) => {
   res.sendFile(path.join(__dirname, "coins.json"));
-});
-
-app.post("/coins", (req, res) => {
-  console.log(req.body);
-  res.json({ success: true });
-});
-
-app.post("/date", (req, res) => {
-  console.log(req.body.option);
 });
 
 app.listen(port, () => {

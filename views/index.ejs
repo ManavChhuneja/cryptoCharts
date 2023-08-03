@@ -30,7 +30,7 @@
       <ul>
         <li><h1>Crypto Charts</h1></li>
         <li>
-          <form action="/coin" method="post">
+          <form id="coinForm">
             <input type="text" placeholder="Search" name="coin" id="search" />
             <div id="suggestions" class="suggestions-dropdown"></div>
           </form>
@@ -41,7 +41,7 @@
     <section id="charts">
       <div class="title-container">
         <h2>BTC</h2>
-        <form method="post" action="/date" id="radioForm">
+        <form id="radioForm">
           <div class="radio-group">
             <label>
               <input type="radio" name="option" value="1" />
@@ -60,7 +60,7 @@
               <span>90 Day</span>
             </label>
             <label>
-              <input type="radio" name="option" value="10" />
+              <input type="radio" name="option" value="180" />
               <span>180 Days</span>
             </label>
             <label>
@@ -71,8 +71,30 @@
         </form>
       </div>
       <canvas id="myChart"></canvas>
-
-      <script src="/logic/coinCharts.js"></script>
+      <script>
+        let ctx = document.getElementById("myChart").getContext("2d");
+        let myChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["January", "February", "March", "April", "May"],
+            datasets: [
+              {
+                label: "# of Votes",
+                data: [12, 19, 3, 5, 2, 3],
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      </script>
     </section>
   </body>
 </html>

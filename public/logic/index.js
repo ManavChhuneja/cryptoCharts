@@ -1,22 +1,14 @@
-const radioButtons = document.querySelectorAll('input[type="radio"]');
-
-// Add an event listener to each radio button
-radioButtons.forEach(function (radioButton) {
-  radioButton.addEventListener("change", function () {
-    // Submit the form when a radio button is selected
-    document.getElementById("radioForm").submit();
-  });
-});
-
+const coinForm = document.getElementById("coinForm");
+const radioForm = document.getElementById("radioForm");
+const inputElement = document.querySelector("#search");
 const textInput = document.querySelector('input[type="text"]');
+const suggestionsElement = document.getElementById("suggestions");
 
 // Load the JSON file
 fetch("http://localhost:3000/coinsData")
   .then((response) => response.json())
   .then((data) => {
-    const inputElement = document.getElementById("search");
-    const suggestionsElement = document.getElementById("suggestions");
-
+    // const suggestionsElement = document.getElementById("suggestions");
     // Add event listener for input changes
     inputElement.addEventListener("input", (e) => {
       const value = e.target.value;
@@ -34,22 +26,10 @@ fetch("http://localhost:3000/coinsData")
         suggestionsElement.appendChild(div);
         div.classList.add("suggestion-hover");
         div.addEventListener("click", (e) => {
-          const selectedCoin = e.target.innerText;
-          fetch("/coins", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            // You can add a body if needed
-            body: JSON.stringify({ coin: selectedCoin }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              // Handle the response data
-              console.log(data);
-            });
-
+          inputElement.value = e.target.innerText;
+          coinForm.dispatchEvent(new Event("submit"));
           suggestionsElement.innerHTML = "";
+          inputElement.value = "";
           suggestionsElement.style.display = "none";
         });
       });
@@ -63,10 +43,39 @@ fetch("http://localhost:3000/coinsData")
     });
   });
 
-inputElement.addEventListener("blur", () => {
-  // Clear and hide the dropdown when the input loses focus
-  suggestionsElement.innerHTML = "";
-  suggestionsElement.style.display = "none";
+////////////////////////////////////////////////////////////////////
+
+function updateChart(lookback, coin) {
+  fetch(`http://localhost:3000/coin-chart?lookback=${lookback}&coin=${coin}`)
+    .then((response) => response.json())
+    .then((data) => {
+      // Handle the data from the server here
+      console.log(data);
+    })
+    .catch((error) => {
+      // Handle any errors
+      console.error("error bro");
+    });
+}
+
+coinForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const coin = inputElement.value;
+  sessionStorage.setItem("coin", coin);
+  const lookback = "7";
+  inputElement.value = "";
+  updateChart(lookback, coin);
 });
 
-////////////////////////////////////////////////////////////////////
+radioForm.addEventListener("change", (e) => {
+  e.preventDefault();
+  const coin = sessionStorage.getItem("coin") || "BTC";
+  const lookback = radioForm.querySelector(
+    'input[name="option"]:checked'
+  ).value;
+  updateChart(lookback, coin);
+});
+
+radioForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
