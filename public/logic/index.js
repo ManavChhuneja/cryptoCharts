@@ -46,16 +46,7 @@ fetch("http://localhost:3000/coinsData")
 ////////////////////////////////////////////////////////////////////
 
 function updateChart(lookback, coin) {
-  fetch(`http://localhost:3000/coin-chart?lookback=${lookback}&coin=${coin}`)
-    .then((response) => response.json())
-    .then((data) => {
-      // Handle the data from the server here
-      console.log(data);
-    })
-    .catch((error) => {
-      // Handle any errors
-      console.error("error bro");
-    });
+  window.location.href = `http://localhost:3000/?lookback=${lookback}&coin=${coin}`;
 }
 
 coinForm.addEventListener("submit", (e) => {

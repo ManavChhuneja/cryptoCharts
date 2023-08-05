@@ -40,7 +40,7 @@
     <hr />
     <section id="charts">
       <div class="title-container">
-        <h2>BTC</h2>
+        <h2><%= coin%></h2>
         <form id="radioForm">
           <div class="radio-group">
             <label>
@@ -59,28 +59,26 @@
               <input type="radio" name="option" value="90" />
               <span>90 Day</span>
             </label>
-            <label>
-              <input type="radio" name="option" value="180" />
-              <span>180 Days</span>
-            </label>
-            <label>
-              <input type="radio" name="option" value="360" />
-              <span>360 Days</span>
             </label>
           </div>
         </form>
       </div>
       <canvas id="myChart"></canvas>
       <script>
+        const dateString = <%- JSON.stringify(dates) %>;
+        console.log(dateString)
+        const closingDates = dateString.map(element => element.slice(0,10));
+        const closingRates = <%- JSON.stringify(rates) %>;
+        console.log(closingRates)
         let ctx = document.getElementById("myChart").getContext("2d");
         let myChart = new Chart(ctx, {
           type: "line",
           data: {
-            labels: ["January", "February", "March", "April", "May"],
+            labels: closingDates,
             datasets: [
               {
-                label: "# of Votes",
-                data: [12, 19, 3, 5, 2, 3],
+                label: "Closing rates",
+                data: closingRates,
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
               },
@@ -89,7 +87,7 @@
           options: {
             scales: {
               y: {
-                beginAtZero: true,
+                beginAtZero: false,
               },
             },
           },

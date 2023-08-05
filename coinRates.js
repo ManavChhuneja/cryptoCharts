@@ -5,7 +5,12 @@ config();
 
 let today = new Date().toISOString();
 
-const coinRates = (assetID, startDate, endDate = new Date().toISOString()) => {
+const coinRates = (assetID, lookback, endDate = new Date().toISOString()) => {
+  let today = new Date();
+  let startDate = new Date(today);
+  startDate.setDate(today.getDate() - lookback);
+  startDate = startDate.toISOString();
+
   const config = {
     method: "get",
     maxBodyLength: Infinity,

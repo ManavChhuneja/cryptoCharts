@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+import coinRates from "./coinRates.js";
 
 const app = express();
 const port = 3000;
@@ -13,14 +14,17 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.render("index.ejs");
-});
-
-app.get("/coin-chart", (req, res) => {
-  const { coin, lookback } = req.query;
+app.get("/", async (req, res) => {
+  const { coin = "BTC", lookback = "7" } = req.query;
   console.log(coin, lookback);
-  res.sendStatus(200);
+  let myData;
+  try {
+    myData = await coinRates(coin, lookback);
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(myData);
+  res.render("index.ejs", { ...myData, coin: coin });
 });
 
 app.get("/coinsData", (req, res) => {
