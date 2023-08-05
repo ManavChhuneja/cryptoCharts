@@ -2,10 +2,11 @@ import express from "express";
 import axios from "axios";
 import path from "path";
 import { fileURLToPath } from "url";
+import coinRates from "./coinRates.js";
+import currentRate from "./currentRate.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-import coinRates from "./coinRates.js";
 
 const app = express();
 const port = 3000;
@@ -16,15 +17,25 @@ app.use(express.json());
 
 app.get("/", async (req, res) => {
   const { coin = "BTC", lookback = "7" } = req.query;
-  console.log(coin, lookback);
   let myData;
   try {
     myData = await coinRates(coin, lookback);
   } catch (error) {
     console.log(error);
   }
-  console.log(myData);
-  res.render("index.ejs", { ...myData, coin: coin });
+  let currentCoinRate;
+  try {
+    currentCoinRate = await currentRate(coin);
+    currentCoinRate = currentCoinRate.toFixed(2);
+    console.log(currentCoinRate);
+  } catch (error) {
+    console.log(error);
+  }
+  res.render("index.ejs", {
+    ...myData,
+    coin: coin,
+    currentRate: currentCoinRate,
+  });
 });
 
 app.get("/coinsData", (req, res) => {

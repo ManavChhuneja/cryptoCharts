@@ -1,9 +1,6 @@
-import express from "express";
 import axios from "axios";
 import { config } from "dotenv";
 config();
-
-let today = new Date().toISOString();
 
 const coinRates = (assetID, lookback, endDate = new Date().toISOString()) => {
   let today = new Date();

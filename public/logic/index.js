@@ -70,3 +70,12 @@ radioForm.addEventListener("change", (e) => {
 radioForm.addEventListener("submit", (e) => {
   e.preventDefault();
 });
+
+document.querySelector(".burger-menu").addEventListener("click", function () {
+  var menu = document.querySelector(".radio-group");
+  if (menu.style.display === "none" || menu.style.display === "") {
+    menu.style.display = "flex";
+  } else {
+    menu.style.display = "none";
+  }
+});
