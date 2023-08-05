@@ -17,6 +17,7 @@ app.use(express.json());
 
 app.get("/", async (req, res) => {
   const { coin = "BTC", lookback = "7" } = req.query;
+  console.log(coin, lookback);
   let myData;
   try {
     myData = await coinRates(coin, lookback);
@@ -26,13 +27,22 @@ app.get("/", async (req, res) => {
   let currentCoinRate;
   try {
     currentCoinRate = await currentRate(coin);
-    currentCoinRate = currentCoinRate.toFixed(2);
-    console.log(currentCoinRate);
+    if (currentCoinRate !== undefined) {
+      currentCoinRate = currentCoinRate.toFixed(2);
+    }
   } catch (error) {
     console.log(error);
   }
+  let dates, rates;
+  if (myData) {
+    dates = myData.dates;
+    rates = myData.rates;
+    console.log(dates);
+  }
+
   res.render("index.ejs", {
-    ...myData,
+    dates: dates,
+    rates: rates,
     coin: coin,
     currentRate: currentCoinRate,
   });

@@ -40,7 +40,13 @@
     <hr />
     <section id="charts">
       <div class="title-container">
-        <h2><%= coin%> - $<%= currentRate %></h2>
+        <% if (locals.coin && locals.currentRate) { %>
+         <h2><%= coin%> - $<%= currentRate %></h2>
+        <% } else { %>
+        <h2>
+          Too many requests
+          </h2>
+          <% } %>
         <form id="radioForm">
           <div class="burger-menu">&#9776;</div>
           <div class="radio-group">
@@ -65,19 +71,20 @@
         </form>
       </div>
       <canvas id="myChart"></canvas>
-      <script>
-        const dateString = <%- JSON.stringify(dates) %>;
-        console.log(dateString)
-        const closingDates = dateString.map(element => element.slice(0,10));
-        const closingRates = <%- JSON.stringify(rates) %>;
-        console.log(closingRates)
-        let ctx = document.getElementById("myChart").getContext("2d");
-        let myChart = new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: closingDates,
-            datasets: [
-              {
+           <% if (locals.dates && locals.rates) { %>
+             <script>
+                const dateString = <%- JSON.stringify(dates) %>;
+               console.log(dateString)
+                const closingDates = dateString.map(element => element.slice(0,10));
+                const closingRates = <%- JSON.stringify(rates) %>;
+                console.log(closingRates)
+                let ctx = document.getElementById("myChart").getContext("2d");
+                let myChart = new Chart(ctx, {
+                  type: "line",
+                  data: {
+                    labels: closingDates,
+                    datasets: [
+                {
                 label: "Closing Rates (USD)",
                 data: closingRates,
                 borderColor: "rgba(75, 192, 192, 1)",
@@ -94,6 +101,12 @@
           },
         });
       </script>
+         
+        <% } else { %>
+          <h3>
+            You have reached your limit for daily uses, please try again tomorrow.
+          </h3>
+          <% } %>
     </section>
   </body>
 </html>
